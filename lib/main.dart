@@ -7,6 +7,7 @@ import 'screens/input_page.dart';
 
 void main() => runApp(BMICalculator());
 
+//TODO Correction icon
 class BMICalculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

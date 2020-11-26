@@ -57,6 +57,7 @@ class ImcBrain {
     return imc.interpretation;
   }
 
+//TODO Prendre en compte age lors du calcul et homme ou femme
   double calculIndiceIMC() {
     indiceIMC = (poids / pow(tailleCm / 100, 2));
     listImc.forEach((element) {
