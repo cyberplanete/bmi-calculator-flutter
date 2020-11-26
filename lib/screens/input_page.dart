@@ -1,12 +1,17 @@
 import 'dart:ui';
 
+import 'file:///H:/Mes%20Documents%20Mega/Developpement/MesProjetsDev/Perso/bmi-calculator-flutter/lib/screens/resulatIMC.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../components/Button_bottom.dart';
+import '../components/button_cercle.dart';
 import 'carteReutilisable.dart';
-import 'card_Content.dart';
-import 'constants.dart';
+import '../components/card_Content.dart';
+import '../constants.dart';
+import '../imc.dart';
+import '../imcBrain.dart';
 
 enum GenderType { Femme, Homme }
 
@@ -18,9 +23,11 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Color maleCardCouleur = kInativeCardCouleur;
   Color femaleCardCouleur = kInativeCardCouleur;
+  int poids = 60;
   int tailleCm = 180;
+  int age = 19;
   GenderType selectedGender;
-
+  double indiceIMC;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,23 +143,102 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   flex: 5,
                   child: new CarteReutilisable(
+                    carteContent: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Poids'),
+                        Text(
+                          poids.toString(),
+                          style: kLabelTextStyleBold,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            BoutonCercle(
+                                iconAddOrSubstrac: FontAwesomeIcons.minus,
+                                onClique: () {
+                                  setState(() {
+                                    poids--;
+                                  });
+                                }),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            BoutonCercle(
+                              iconAddOrSubstrac: FontAwesomeIcons.plus,
+                              onClique: () {
+                                setState(() {
+                                  poids++;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                     couleur: kActiveCardCouleur,
                   ),
                 ),
                 Expanded(
                   flex: 5,
                   child: new CarteReutilisable(
+                    carteContent: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Age'),
+                        Text(
+                          age.toString(),
+                          style: kLabelTextStyleBold,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            BoutonCercle(
+                                iconAddOrSubstrac: FontAwesomeIcons.minus,
+                                onClique: () {
+                                  setState(() {
+                                    age--;
+                                  });
+                                }),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            BoutonCercle(
+                              iconAddOrSubstrac: FontAwesomeIcons.plus,
+                              onClique: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                     couleur: kActiveCardCouleur,
                   ),
                 ),
               ],
             ),
           ),
-          Container(
-            color: kBottomCardCouleur,
-            margin: EdgeInsets.only(top: 10),
-            width: double.infinity,
-            height: kBottomContainerCard,
+          new ButtonBottom(
+            onTap: () {
+              ImcBrain imcBrain =
+                  new ImcBrain(poids: poids, tailleCm: tailleCm);
+
+              indiceIMC = imcBrain.calculIndiceIMC();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => new ResultatIMC(
+                    imcInterpretation: imcBrain.getInterpretation(),
+                    indiceIMC: indiceIMC,
+                    imcRecommandation: imcBrain.getRecommandation(),
+                  ),
+                ),
+              );
+            },
+            buttonTexte: 'Calculer',
           )
         ],
       ),

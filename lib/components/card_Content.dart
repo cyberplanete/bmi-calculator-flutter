@@ -1,5 +1,5 @@
 import 'package:bmi_calculator/constants.dart';
-import 'package:bmi_calculator/input_page.dart';
+import 'file:///H:/Mes%20Documents%20Mega/Developpement/MesProjetsDev/Perso/bmi-calculator-flutter/lib/screens/input_page.dart';
 import 'package:flutter/cupertino.dart';
 
 class CardContent extends StatelessWidget {

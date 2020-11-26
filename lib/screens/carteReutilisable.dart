@@ -5,6 +5,7 @@ class CarteReutilisable extends StatelessWidget {
   final Widget carteContent;
   final Function onPress;
   CarteReutilisable({@required this.couleur, this.carteContent, this.onPress});
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
